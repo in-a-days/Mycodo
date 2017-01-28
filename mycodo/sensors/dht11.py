@@ -109,7 +109,7 @@ class DHT11Sensor(AbstractSensor):
                 self.logger.error(
                     'Could not initialize sensor. Check if gpiod is running. '
                     'Error: {msg}'.format(msg=except_msg))
-            self._humidity, self._temperature = Adafruit_DHT.read_retry(DHT11, gpio)
+            self._humidity, self._temperature = Adafruit_DHT.read_retry(device, gpio)
             self._dew_point = dewpoint(self._temperature, self._humidity)
         except Exception as e:
             self.logger.error(
