@@ -2,6 +2,7 @@
 import logging
 import time
 import pigpio
+import Adafruit_DHT
 from sensorutils import dewpoint
 from .base_sensor import AbstractSensor
 
@@ -107,11 +108,7 @@ class DHT11Sensor(AbstractSensor):
                 self.logger.error(
                     'Could not initialize sensor. Check if gpiod is running. '
                     'Error: {msg}'.format(msg=except_msg))
-            self.pi.write(self.gpio, pigpio.LOW)
-            time.sleep(0.017)  # 17 ms
-            self.pi.set_mode(self.gpio, pigpio.INPUT)
-            self.pi.set_watchdog(self.gpio, 200)
-            time.sleep(0.2)
+            self._humidity, self._temperature = Adafruit_DHT.read_retry(DHT11, gpio)
             self._dew_point = dewpoint(self._temperature, self._humidity)
         except Exception as e:
             self.logger.error(
