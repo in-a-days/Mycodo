@@ -6,6 +6,7 @@ import Adafruit_DHT
 from sensorutils import dewpoint
 from .base_sensor import AbstractSensor
 
+device = Adafruit_DHT.DHT11
 
 class DHT11Sensor(AbstractSensor):
     """
